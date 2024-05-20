@@ -4,6 +4,8 @@ import com.example.careercsv.report.Transaction;
 import com.example.careercsv.report.parser.FileParser;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,18 +19,22 @@ import java.util.List;
 @Service
 class CsvFileParserImpl implements FileParser {
 
+    private static final Logger log = LoggerFactory.getLogger(CsvFileParserImpl.class);
+
     private static final String[] HEADERS = { HEADER_TRANSACTION_ID, HEADER_CUSTOMER_ID, HEADER_ITEM_ID,
             HEADER_TRANSACTION_DATE, HEADER_ITEM_PRICE, HEADER_ITEM_QUANTITY};
 
     @Override
     public List<Transaction> parse(InputStream inputStream) throws IOException {
 
+        log.debug("parsing input stream");
+
         CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
                 .setHeader(HEADERS)
                 .setSkipHeaderRecord(true)
                 .build();
 
-        Reader reader = new  InputStreamReader(inputStream);
+        Reader reader = new InputStreamReader(inputStream);
         Iterable<CSVRecord> csvRecords = csvFormat.parse(reader);
 
         List<Transaction> transactions = new ArrayList<>();
@@ -42,6 +48,8 @@ class CsvFileParserImpl implements FileParser {
             Integer itemQuantity = Integer.parseInt(csvRecord.get(HEADER_ITEM_QUANTITY));
 
             Transaction transaction = new Transaction(transactionId, customerId, itemId, transactionDate, itemPrice, itemQuantity);
+            log.trace("parsed entry {}", transaction);
+
             transactions.add(transaction);
         }
 
