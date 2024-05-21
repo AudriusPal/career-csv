@@ -26,7 +26,7 @@ class ReportServiceTest {
     static class TestConfig {}
 
     @MockBean
-    FileParser fileParser;
+    private FileParser fileParser;
 
     @Autowired
     private ReportService reportService;

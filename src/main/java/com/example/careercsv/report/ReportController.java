@@ -3,7 +3,6 @@ package com.example.careercsv.report;
 import com.example.careercsv.report.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class ReportController {
 
     @PostMapping(value = "/generate", consumes = "multipart/form-data")
     public ResponseEntity<ReportDTO> generateReport(@RequestParam("file") MultipartFile file) {
-        log.info("REST endpoind for generating report from MultipartFile");
+        log.info("REST endpoint for generating report from MultipartFile");
         ReportDTO reportDTO = reportService.generateReport(file);
         return ResponseEntity.ok(reportDTO);
     }
