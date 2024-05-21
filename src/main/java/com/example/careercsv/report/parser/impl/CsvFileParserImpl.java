@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +29,7 @@ class CsvFileParserImpl implements FileParser {
     public List<Transaction> parse(InputStream inputStream) throws IOException {
 
         log.debug("parsing input stream");
+        Assert.notNull(inputStream, "can't parse, stream is null");
 
         CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
                 .setHeader(HEADERS)
