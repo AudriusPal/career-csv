@@ -34,7 +34,6 @@ class FileParserTest {
         void testParseValidCsvFileWith20Records() {
 
             int expectedRecordsSize = 20;
-
             InputStream inputStream = getClass().getResourceAsStream("/csv/valid_all_values_20_records.csv");
 
             Assertions.assertThat(inputStream).isNotNull();
@@ -42,7 +41,7 @@ class FileParserTest {
             Assertions.assertThatCode (() -> {
                 List<Transaction> transactionList = fileParser.parse(inputStream);
                 Assertions.assertThat(transactionList).isNotNull();
-                Assertions.assertThat(transactionList.size()).isEqualTo(expectedRecordsSize);
+                Assertions.assertThat(transactionList).hasSize(expectedRecordsSize);
 
                 transactionList.stream().forEach(t -> {
                     Assertions.assertThat(t).isNotNull();

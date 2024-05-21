@@ -60,7 +60,7 @@ class CsvReportServiceImpl implements ReportService {
     private Double calculateTotalRevenue(List<Transaction> transactions) {
         Assert.notNull(transactions, "transactions are null!");
 
-        Double totalRevenue = 0.d;
+        Double totalRevenue = 0.0;
 
         for (Transaction transaction : transactions) {
             totalRevenue += transaction.itemPrice() * transaction.itemQuantity();
@@ -99,7 +99,7 @@ class CsvReportServiceImpl implements ReportService {
         Map<LocalDate, Double> countMap = new HashMap<>();
 
         for (Transaction transaction : transactions) {
-            countMap.put(transaction.transactionDate(), countMap.getOrDefault(transaction.transactionDate(), 0.d) +
+            countMap.put(transaction.transactionDate(), countMap.getOrDefault(transaction.transactionDate(), 0.0) +
                     transaction.itemQuantity() * transaction.itemPrice());
         }
 
